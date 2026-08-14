@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fox3D — druk 3D na zamówienie | figurki, gadżety, personalizacja</title>
+<meta name="description" content="Fox3D — druk 3D na zamówienie. Figurki, gadżety, organizery i lampki drukowane w Polsce. Przyślij własny plik albo wybierz gotowy model. Wysyłka w 48 h.">
+<meta name="theme-color" content="#0F0C0A" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#E7E4E0" media="(prefers-color-scheme: light)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<!-- ZMIEŃ: adres strony i zdjęcie podglądu, gdy będzie znany hosting -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fox3D — druk 3D na zamówienie">
+<meta property="og:description" content="Figurki, gadżety i części drukowane w Polsce. Przyślij własny plik albo wybierz gotowy model.">
+<meta property="og:locale" content="pl_PL">
+
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<a class="skip" href="#tresc">Przejdź do treści</a>
+
+<!-- listwa wysokości druku — rośnie przy przewijaniu -->
+<div class="zrail" aria-hidden="true">
+  <div class="cap">FOX3D · BUILD</div>
+  <div class="ticks" id="ticks">
+    <div class="fill" id="zfill"></div>
+    <div class="head" id="zhead"></div>
+  </div>
+  <div class="zval" id="zval">Z 0.0 mm</div>
+</div>
+
+<header class="top">
+  <a class="lockup" href="#gora" aria-label="Fox3D — początek strony">
+    <canvas id="markCanvas" width="72" height="72" aria-hidden="true"></canvas>
+    <span class="wordmark">Fox<i>3D</i></span>
+  </a>
+
+  <nav class="nav" aria-label="Główna">
+    <a href="#katalog">Katalog</a>
+    <a href="#kategorie">Kategorie</a>
+    <a href="#zamowienie">Zamówienie</a>
+    <a href="#gdzie-kupic">Gdzie kupić</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+
+  <div class="top-actions">
+    <!-- ZMIEŃ: link do profilu TikTok -->
+    <a class="btn btn-sm btn-ghost tt" href="https://www.tiktok.com/@fox3d" target="_blank" rel="noopener">TikTok</a>
+
+    <!-- słońce zmienia się w księżyc: maska wycina kęs z tarczy, promienie chowają się do środka -->
+    <button class="tgl" id="themeBtn" type="button" aria-pressed="false" aria-label="Włącz motyw ciemny">
+      <svg class="tgl-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <mask id="foxMoonMask">
+          <rect x="0" y="0" width="24" height="24" fill="#fff"></rect>
+          <circle class="cut" cx="12" cy="12" r="7" fill="#000"></circle>
+        </mask>
+        <circle class="disc" cx="12" cy="12" r="5.6" mask="url(#foxMoonMask)"></circle>
+        <g class="rays" stroke-linecap="round">
+          <line x1="12" y1="1.4" x2="12" y2="3.6"></line>
+          <line x1="12" y1="20.4" x2="12" y2="22.6"></line>
+          <line x1="1.4" y1="12" x2="3.6" y2="12"></line>
+          <line x1="20.4" y1="12" x2="22.6" y2="12"></line>
+          <line x1="4.5" y1="4.5" x2="6.1" y2="6.1"></line>
+          <line x1="17.9" y1="17.9" x2="19.5" y2="19.5"></line>
+          <line x1="4.5" y1="19.5" x2="6.1" y2="17.9"></line>
+          <line x1="17.9" y1="6.1" x2="19.5" y2="4.5"></line>
+        </g>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main id="tresc">
+  <span id="gora"></span>
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero">
+    <canvas id="foxCanvas" aria-hidden="true"></canvas>
+    <div class="hero-inner">
+      <span class="badge" style="--i:0"><span class="live" aria-hidden="true"></span>Drukarka pracuje · przyjmujemy zlecenia</span>
+      <h1><span class="line" style="--i:1">Twój pomysł,</span><span class="line" style="--i:2">nasze <em>wykonanie.</em></span></h1>
+      <p style="--i:4">Figurki, gadżety i części na zamówienie — drukowane w Polsce, wysyłane w 48 h. Wybierz gotowy model albo przyślij własny plik.</p>
+      <div class="cta-row" style="--i:5">
+        <a class="btn btn-primary" href="#katalog">Zobacz katalog</a>
+        <a class="btn btn-ghost" href="#zamowienie">Wyceń własny druk</a>
+      </div>
+      <div class="specline" style="--i:6">
+        <span><b>PLA · PETG · TPU</b></span>
+        <span>warstwa <b>0,12–0,28 mm</b></span>
+        <span>pole robocze <b>256 × 256 × 256 mm</b></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ KATALOG ============================ -->
+  <section id="katalog" class="reveal">
+    <p class="eyebrow">Katalog</p>
+    <div class="sec-head">
+      <h2>Co teraz schodzi<br>z płyty</h2>
+      <p class="lead">Gotowe modele, wysyłka w 48 h. Każdy druk możemy zrobić w innym kolorze — napisz, jaki chcesz.</p>
+    </div>
+
+    <!--
+      ZMIEŃ: zdjęcia produktów.
+      Wrzuć pliki do assets/img/ i podmień atrybut src w każdym <img>.
+      Proporcja 4:3, najlepiej 1200 × 900 px, format .webp lub .jpg.
+    -->
+    <div class="grid">
+
+      <article class="card">
+        <div class="thumb"><img src="assets/img/placeholder.svg" alt="Figurka liska Fox3D, wysokość 12 cm" loading="lazy" width="1200" height="900"></div>
+        <h3>Lisek Fox — figurka 12 cm</h3>
+        <p class="desc">Maskotka marki, drukowana w cienkiej warstwie. Dostępna w pomarańczu, czerni i bieli.</p>
+        <ul class="chips">
+          <li class="chip mat">PLA</li><li class="chip">0,12 mm</li><li class="chip">6 h 40 min</li>
+        </ul>
+        <div class="buy">
+          <span class="price">59,00 zł</span>
+          <a class="btn btn-sm btn-primary" href="#gdzie-kupic">Kup</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="thumb"><img src="assets/img/placeholder.svg" alt="Modułowy organizer na biurko" loading="lazy" width="1200" height="900"></div>
+        <h3>Organizer modułowy na biurko</h3>
+        <p class="desc">Moduły łączą się na zatrzask — dokładasz kolejne, kiedy przybywa rzeczy.</p>
+        <ul class="chips">
+          <li class="chip mat">PETG</li><li class="chip">0,20 mm</li><li class="chip">3 h 05 min</li>
+        </ul>
+        <div class="buy">
+          <span class="price">79,00 zł</span>
+          <a class="btn btn-sm btn-primary" href="#gdzie-kupic">Kup</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="thumb"><img src="assets/img/placeholder.svg" alt="Lampka warstwowa z wydrukowanym zdjęciem" loading="lazy" width="1200" height="900"></div>
+        <h3>Lampka warstwowa ze zdjęcia</h3>
+        <p class="desc">Twoje zdjęcie zamienione w relief — obraz pojawia się dopiero po zapaleniu.</p>
+        <ul class="chips">
+          <li class="chip mat">PLA</li><li class="chip">0,10 mm</li><li class="chip">personalizacja</li>
+        </ul>
+        <div class="buy">
+          <span class="price">119,00 zł</span>
+          <a class="btn btn-sm btn-primary" href="#zamowienie">Zamów</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="thumb"><img src="assets/img/placeholder.svg" alt="Uchwyt na pada i słuchawki" loading="lazy" width="1200" height="900"></div>
+        <h3>Uchwyt na pada i słuchawki</h3>
+        <p class="desc">Pod biurko albo na ścianę. Filcowe podkładki w komplecie, nic się nie rysuje.</p>
+        <ul class="chips">
+          <li class="chip mat">PETG</li><li class="chip">0,20 mm</li><li class="chip">4 h 20 min</li>
+        </ul>
+        <div class="buy">
+          <span class="price">69,00 zł</span>
+          <a class="btn btn-sm btn-primary" href="#gdzie-kupic">Kup</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="thumb"><img src="assets/img/placeholder.svg" alt="Geometryczna doniczka o wysokości 14 cm" loading="lazy" width="1200" height="900"></div>
+        <h3>Doniczka geometryczna 14 cm</h3>
+        <p class="desc">Z podstawką na wodę. Warstwy zostawione celowo widoczne — tak wygląda najlepiej.</p>
+        <ul class="chips">
+          <li class="chip mat">PLA</li><li class="chip">0,24 mm</li><li class="chip">5 h 10 min</li>
+        </ul>
+        <div class="buy">
+          <span class="price">49,00 zł</span>
+          <a class="btn btn-sm btn-primary" href="#gdzie-kupic">Kup</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="thumb"><img src="assets/img/placeholder.svg" alt="Breloki z imionami, zestaw pięciu sztuk" loading="lazy" width="1200" height="900"></div>
+        <h3>Breloki z imieniem — 5 szt.</h3>
+        <p class="desc">Dowolne imiona i kolory. Świetnie schodzą jako drobny prezent dla ekipy.</p>
+        <ul class="chips">
+          <li class="chip mat">PLA</li><li class="chip">0,16 mm</li><li class="chip">1 h 30 min</li>
+        </ul>
+        <div class="buy">
+          <span class="price">35,00 zł</span>
+          <a class="btn btn-sm btn-primary" href="#zamowienie">Zamów</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============================ KATEGORIE ============================ -->
+  <section id="kategorie" class="reveal">
+    <p class="eyebrow">Kategorie</p>
+    <div class="sec-head">
+      <h2>Czym się zajmujemy</h2>
+      <p class="lead">Jeśli da się to zamodelować, da się to wydrukować. Poniżej to, co robimy najczęściej.</p>
+    </div>
+    <ul class="cats">
+      <li class="cat"><span class="cat-n">Figurki i modele</span><span class="cat-d">Maskotki, miniatury, popiersia, modele z gier</span></li>
+      <li class="cat"><span class="cat-n">Gadżety</span><span class="cat-d">Breloki, podstawki, stojaki, drobiazgi na prezent</span></li>
+      <li class="cat"><span class="cat-n">Organizery</span><span class="cat-d">Biurko, warsztat, szuflada, uchwyty pod blat</span></li>
+      <li class="cat"><span class="cat-n">Lampki i dekor</span><span class="cat-d">Lampki warstwowe, doniczki, wazony, świeczniki</span></li>
+      <li class="cat"><span class="cat-n">Personalizacja</span><span class="cat-d">Imiona, logo, daty — nanoszone na dowolny model</span></li>
+      <li class="cat"><span class="cat-n">Części zamienne</span><span class="cat-d">Zatrzaski, klipsy, pokrętła — z pliku albo z odrysu</span></li>
+    </ul>
+  </section>
+
+  <!-- ============================ ZAMÓWIENIE ============================ -->
+  <section id="zamowienie" class="reveal">
+    <p class="eyebrow">Druk na zamówienie</p>
+    <div class="sec-head">
+      <h2>Cztery kroki<br>od pomysłu do paczki</h2>
+      <p class="lead">Nie musisz mieć gotowego pliku. Wystarczy zdjęcie i zdanie, o co chodzi — resztę ogarniemy.</p>
+    </div>
+
+    <ol class="steps">
+      <li class="step"><span class="n">Krok 01</span><h3>Wyślij plik lub opis</h3>
+        <p>STL, 3MF, OBJ — albo zwykłe zdjęcie i kilka słów.</p></li>
+      <li class="step"><span class="n">Krok 02</span><h3>Wycena w 24 h</h3>
+        <p>Materiał, kolor, wysokość warstwy i cena. Bez zobowiązań.</p></li>
+      <li class="step"><span class="n">Krok 03</span><h3>Druk</h3>
+        <p>Dostajesz zdjęcie z płyty, zanim cokolwiek pojedzie dalej.</p></li>
+      <li class="step"><span class="n">Krok 04</span><h3>Wysyłka 48 h</h3>
+        <p>Obrobione, sprawdzone, zapakowane. Paczkomat lub odbiór.</p></li>
+    </ol>
+
+    <div class="form-wrap">
+      <form id="wycena" class="form" novalidate>
+        <h3 class="form-title">Poproś o wycenę</h3>
+        <p class="form-sub">Formularz otworzy Twój program pocztowy z gotową wiadomością. Możesz też napisać wprost na <a id="mailLink" href="mailto:kontakt@fox3d.pl">kontakt@fox3d.pl</a>.</p>
+
+        <div class="fields">
+          <label class="field">
+            <span>Imię</span>
+            <input type="text" name="imie" id="f-imie" autocomplete="given-name" required>
+          </label>
+          <label class="field">
+            <span>Kontakt zwrotny</span>
+            <input type="text" name="kontakt" id="f-kontakt" placeholder="e-mail lub @nick" required>
+          </label>
+          <label class="field">
+            <span>Materiał</span>
+            <select name="material" id="f-material">
+              <option>Nie wiem — doradźcie</option>
+              <option>PLA — figurki, dekoracje</option>
+              <option>PETG — rzeczy używane na co dzień</option>
+              <option>TPU — elastyczne</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Ilość</span>
+            <input type="number" name="ilosc" id="f-ilosc" min="1" value="1" inputmode="numeric">
+          </label>
+          <label class="field field-wide">
+            <span>Co drukujemy?</span>
+            <textarea name="opis" id="f-opis" rows="4" placeholder="Np. figurka lisa 15 cm, pomarańczowa, z podstawką pod imię. Mam plik STL." required></textarea>
+          </label>
+        </div>
+
+        <div class="form-foot">
+          <button class="btn btn-primary" type="submit">Wyślij zapytanie</button>
+          <span class="form-note" id="formNote" role="status">Plik STL dołączysz w programie pocztowym.</span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============================ GDZIE KUPIĆ ============================ -->
+  <section id="gdzie-kupic" class="reveal">
+    <p class="eyebrow">Gdzie kupić</p>
+    <div class="sec-head">
+      <h2>Sprzedajemy tam,<br>gdzie już jesteś</h2>
+      <p class="lead">Gotowe druki wystawiamy na Vinted i OLX, a wszystko, co wychodzi z drukarki, pokazujemy na TikToku.</p>
+    </div>
+
+    <!-- ZMIEŃ: linki do profili. Kafel, którego nie używasz, po prostu usuń. -->
+    <div class="markets">
+      <a class="market m-tiktok" href="https://www.tiktok.com/@fox3d" target="_blank" rel="noopener">
+        <span class="glyph" aria-hidden="true">TT</span>
+        <span class="txt"><span class="nm">TikTok</span><span class="sub">Filmy z druku, premiery, kulisy warsztatu</span></span>
+        <span class="arw" aria-hidden="true">↗</span>
+      </a>
+      <a class="market m-vinted" href="https://www.vinted.pl/member/fox3d" target="_blank" rel="noopener">
+        <span class="glyph" aria-hidden="true">V</span>
+        <span class="txt"><span class="nm">Vinted</span><span class="sub">Gotowe figurki i gadżety, wysyłka do paczkomatu</span></span>
+        <span class="arw" aria-hidden="true">↗</span>
+      </a>
+      <a class="market m-olx" href="https://www.olx.pl/oferty/uzytkownik/fox3d/" target="_blank" rel="noopener">
+        <span class="glyph" aria-hidden="true">OLX</span>
+        <span class="txt"><span class="nm">OLX</span><span class="sub">Większe zamówienia i odbiór osobisty</span></span>
+        <span class="arw" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================ O FOX3D ============================ -->
+  <section id="o-nas" class="reveal">
+    <p class="eyebrow">O Fox3D</p>
+    <div class="split">
+      <div>
+        <h2>Mały warsztat,<br>konkretna robota</h2>
+        <p>Fox3D to warsztat druku 3D prowadzony w Polsce. Drukujemy w technologii FDM — warstwa po warstwie, z filamentu. Każdy wydruk przechodzi przez ręce: zdejmujemy podpory, czyścimy krawędzie, sprawdzamy wymiary i dopiero wtedy pakujemy.</p>
+        <p>Nie udajemy fabryki. Jeśli czegoś nie da się zrobić dobrze, mówimy to od razu, zamiast wysyłać coś, co się rozleci po tygodniu.</p>
+      </div>
+      <dl class="specs">
+        <div><dt>Technologia</dt><dd>FDM</dd></div>
+        <div><dt>Pole robocze</dt><dd>256 × 256 × 256 mm</dd></div>
+        <div><dt>Wysokość warstwy</dt><dd>0,12 – 0,28 mm</dd></div>
+        <div><dt>Materiały</dt><dd>PLA · PETG · TPU</dd></div>
+        <div><dt>Wycena</dt><dd>do 24 h</dd></div>
+        <div><dt>Wysyłka</dt><dd>48 h od akceptacji</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============================ FAQ ============================ -->
+  <section id="faq" class="reveal">
+    <p class="eyebrow">FAQ</p>
+    <div class="sec-head">
+      <h2>Pytania,<br>które padają najczęściej</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>Ile czekam na zamówienie?</summary>
+        <p>Gotowe modele z katalogu wysyłamy w 48 h. Przy druku na zamówienie doliczasz czas wyceny (do 24 h) i sam druk — przy typowej figurce to kolejny dzień. Duże albo wielosztukowe zlecenia potrafią zająć tydzień; zawsze podajemy termin przed startem.</p>
+      </details>
+      <details>
+        <summary>Drukujecie z mojego pliku?</summary>
+        <p>Tak. Przyjmujemy STL, 3MF i OBJ. Sprawdzamy model przed drukiem i odzywamy się, jeśli coś wymaga poprawki — na przykład za cienkie ścianki albo brak płaskiej podstawy.</p>
+      </details>
+      <details>
+        <summary>Nie mam pliku, mam tylko pomysł.</summary>
+        <p>To też robimy. Wyślij zdjęcie, szkic albo opis. Przy prostych kształtach model przygotowujemy w cenie druku; przy bardziej rozbudowanych doliczamy koszt modelowania i podajemy go w wycenie, zanim cokolwiek zaczniemy.</p>
+      </details>
+      <details>
+        <summary>Jakich materiałów używacie?</summary>
+        <p>PLA do figurek i dekoracji — najładniej wychodzą detale. PETG do rzeczy używanych na co dzień: jest twardszy i znosi ciepło, więc nadaje się na uchwyty czy części do auta. TPU tam, gdzie coś ma być elastyczne.</p>
+      </details>
+      <details>
+        <summary>Ile kosztuje wysyłka?</summary>
+        <p>Paczkomat 12 zł, kurier 18 zł. Przy zamówieniach powyżej 200 zł wysyłka jest po naszej stronie. Odbiór osobisty po umówieniu — za darmo.</p>
+      </details>
+      <details>
+        <summary>Co, jeśli druk przyjdzie uszkodzony?</summary>
+        <p>Napisz i wyślij zdjęcie. Drukujemy ponownie na nasz koszt albo zwracamy pieniądze — decydujesz Ty. Nie robimy z tego procedury.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <span class="wordmark">Fox<i>3D</i></span>
+      <p>Druk 3D na zamówienie. Figurki, gadżety, organizery i personalizacja.</p>
+    </div>
+
+    <div class="foot-col">
+      <h4>Strona</h4>
+      <a href="#katalog">Katalog</a>
+      <a href="#zamowienie">Druk na zamówienie</a>
+      <a href="#o-nas">O Fox3D</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <div class="foot-col">
+      <h4>Gdzie kupić</h4>
+      <!-- ZMIEŃ: te same linki co w sekcji „Gdzie kupić" -->
+      <a href="https://www.tiktok.com/@fox3d" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://www.vinted.pl/member/fox3d" target="_blank" rel="noopener">Vinted</a>
+      <a href="https://www.olx.pl/oferty/uzytkownik/fox3d/" target="_blank" rel="noopener">OLX</a>
+    </div>
+
+    <div class="foot-col">
+      <h4>Kontakt</h4>
+      <!-- ZMIEŃ: prawdziwy adres e-mail -->
+      <a href="mailto:kontakt@fox3d.pl">kontakt@fox3d.pl</a>
+      <span class="muted">Odpisujemy w ciągu doby</span>
+    </div>
+  </div>
+  <div class="foot-bar">
+    <span>© <span id="rok">2026</span> Fox3D</span>
+    <span class="muted">Wykonanie: warstwa po warstwie</span>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
