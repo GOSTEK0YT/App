@@ -1,0 +1,152 @@
+/* ==========================================================================
+   BIBLIOTEKA GIER — ekran wyboru
+   Tokeny i wspólne elementy siedzą w ../wspolne/podstawa.css.
+   ========================================================================== */
+
+body { overflow-y: auto; }
+
+.hub {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: calc(28px + env(safe-area-inset-top)) 20px calc(32px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ------------------------------------------------------------- nagłówek */
+
+.hub__head { text-align: center; }
+
+.hub__mark {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 12px;
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  gap: 3px;
+}
+.hub__mark span { background: var(--line); border-radius: 3px; }
+.hub__mark span:nth-child(1),
+.hub__mark span:nth-child(4),
+.hub__mark span:nth-child(5),
+.hub__mark span:nth-child(8) { background: var(--accent); }
+.hub__mark span:nth-child(2),
+.hub__mark span:nth-child(6) { background: var(--fill); }
+
+.hub h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.hub__sub { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
+
+/* ----------------------------------------------------------------- gry */
+
+.gry { display: flex; flex-direction: column; gap: 12px; }
+
+.gra {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  color: inherit;
+  transition: transform .12s ease, border-color .15s;
+}
+.gra:active { transform: scale(.99); }
+
+.gra__ikona {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.gra__ikona--piksel {
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  gap: 2px;
+  padding: 11px;
+  /* .gra__ikona centruje zawartość — puste pola siatki zwinęłyby się do zera. */
+  place-items: stretch;
+}
+.gra__ikona--piksel span { border-radius: 2px; background: var(--line); }
+.gra__ikona--piksel span:nth-child(1),
+.gra__ikona--piksel span:nth-child(4),
+.gra__ikona--piksel span:nth-child(5),
+.gra__ikona--piksel span:nth-child(8) { background: #C0561F; }
+.gra__ikona--piksel span:nth-child(2),
+.gra__ikona--piksel span:nth-child(6) { background: var(--fill); }
+
+.gra__kabel {
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  height: 5px;
+  border-radius: 3px;
+}
+.gra__kabel--1 { top: 14px; background: #D33A2C; }
+.gra__kabel--2 { top: 25px; background: #3B6FD4; right: 22px; }
+.gra__kabel--3 { top: 36px; background: #E0B023; }
+
+.gra__tresc { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.gra__nazwa { font-size: 18px; font-weight: 700; }
+.gra__opis { font-size: 14px; line-height: 1.5; color: var(--muted); }
+.gra__meta {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--muted);
+  opacity: .8;
+}
+
+/* ------------------------------------------------------------ instrukcja */
+
+.jak {
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+.jak__tytul {
+  margin: 0 0 10px;
+  font-size: 13px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.jak__kroki { margin: 0; padding-left: 20px; }
+.jak__kroki li { margin-bottom: 6px; font-size: 14px; line-height: 1.5; }
+.jak__nota {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ------------------------------------------------------------- ustawienia */
+
+.prefs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.stan {
+  font-size: 12px;
+  color: var(--muted);
+  padding-left: 2px;
+}
+.stan.is-ok { color: var(--ok); }

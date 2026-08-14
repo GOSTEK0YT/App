@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Piksel — nonogramy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="description" content="Logiczne układanki obrazkowe. Działa bez internetu, po dodaniu do ekranu początkowego chodzi jak aplikacja.">
+
+<meta name="theme-color" content="#131419" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#EDEBE6" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Piksel">
+<link rel="apple-touch-icon" href="../icons/icon-180.png">
+<link rel="icon" href="../icons/icon-192.png" sizes="192x192">
+<link rel="manifest" href="../manifest.webmanifest">
+
+<link rel="stylesheet" href="../wspolne/podstawa.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ====================================================== ekran startowy -->
+<section class="screen screen--menu is-active" id="menuScreen">
+  <div class="menu">
+
+    <a class="wroc" href="../">‹ Biblioteka gier</a>
+
+    <header class="brand">
+      <div class="brand__mark" aria-hidden="true">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <h1>Piksel</h1>
+      <p class="brand__sub">Logiczne układanki obrazkowe</p>
+    </header>
+
+    <button class="btn btn--resume" id="resumeBtn" hidden>
+      <span class="btn__main">Wróć do gry</span>
+      <span class="btn__note" id="resumeNote"></span>
+    </button>
+
+    <button class="btn btn--samouczek" id="tutorialBtn">
+      <span class="btn__main">Samouczek</span>
+      <span class="btn__note" id="tutorialNote">Cztery kroki, uczy zasad na małej planszy</span>
+    </button>
+
+    <div class="field">
+      <span class="field__label" id="sizeLabel">Rozmiar planszy</span>
+      <div class="seg" role="radiogroup" aria-labelledby="sizeLabel">
+        <button class="seg__opt" role="radio" data-size="5" aria-checked="false">5 × 5</button>
+        <button class="seg__opt is-on" role="radio" data-size="10" aria-checked="true">10 × 10</button>
+        <button class="seg__opt" role="radio" data-size="15" aria-checked="false">15 × 15</button>
+      </div>
+    </div>
+
+    <div class="stack">
+      <button class="btn btn--primary" id="playRandomBtn">
+        <span class="btn__main">Nowa plansza</span>
+        <span class="btn__note">Losowana za każdym razem</span>
+      </button>
+      <button class="btn" id="playArtBtn">
+        <span class="btn__main">Obrazek do odkrycia</span>
+        <span class="btn__note" id="artNote">Na końcu odsłania się rysunek</span>
+      </button>
+      <button class="btn" id="playDailyBtn">
+        <span class="btn__main">Zagadka dnia</span>
+        <span class="btn__note" id="dailyNote"></span>
+      </button>
+    </div>
+
+    <div class="stats" id="stats"></div>
+
+    <div class="prefs">
+      <button class="chip" id="themeBtn" aria-pressed="false">
+        <span class="chip__ico chip__ico--motyw" aria-hidden="true"></span>
+        <span class="chip__txt">Motyw</span>
+      </button>
+      <button class="chip" id="errorsBtn" aria-pressed="true">
+        <span class="chip__ico chip__ico--check" aria-hidden="true"></span>
+        <span class="chip__txt">Pilnuj błędów</span>
+      </button>
+      <button class="chip" id="soundBtn" aria-pressed="true">
+        <span class="chip__ico chip__ico--sound" aria-hidden="true"></span>
+        <span class="chip__txt">Dźwięk</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ rozgrywka -->
+<section class="screen screen--game" id="gameScreen">
+
+  <header class="topbar">
+    <button class="icon-btn" id="backBtn" aria-label="Wróć do menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <div class="topbar__mid">
+      <span class="topbar__title" id="puzzleTitle">Plansza</span>
+      <span class="topbar__meta"><span id="timer">0:00</span> · <span id="progress">0 / 0</span></span>
+    </div>
+    <button class="icon-btn" id="restartBtn" aria-label="Zacznij tę planszę od nowa">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 1 2.5 5.8M4 18v-5h5"/></svg>
+    </button>
+  </header>
+
+  <aside class="krok" id="krok" hidden>
+    <p class="krok__licznik" id="krokLicznik"></p>
+    <h2 class="krok__tytul" id="krokTytul"></h2>
+    <p class="krok__tresc" id="krokTresc"></p>
+  </aside>
+
+  <div class="board-wrap" id="boardWrap">
+    <canvas id="board"></canvas>
+  </div>
+
+  <footer class="toolbar">
+    <button class="tool" id="undoBtn" aria-label="Cofnij ostatni ruch">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7L4 12l5 5M4 12h9a6 6 0 0 1 0 12h-1"/></svg>
+      <span>Cofnij</span>
+    </button>
+
+    <div class="tool-switch" role="radiogroup" aria-label="Co robi dotknięcie">
+      <button class="tool-switch__opt is-on" id="toolFill" role="radio" aria-checked="true">
+        <span class="swatch swatch--fill" aria-hidden="true"></span>
+        <span>Maluj</span>
+      </button>
+      <button class="tool-switch__opt" id="toolMark" role="radio" aria-checked="false">
+        <span class="swatch swatch--mark" aria-hidden="true">✕</span>
+        <span>Odrzuć</span>
+      </button>
+    </div>
+
+    <button class="tool" id="hintBtn" aria-label="Podpowiedz jedno pole">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3 11v3h6v-3a6 6 0 0 0-3-11zM10 21h4"/></svg>
+      <span>Podpowiedź</span>
+    </button>
+  </footer>
+</section>
+
+<!-- =============================================================== wygrana -->
+<div class="overlay" id="winOverlay" hidden>
+  <div class="win">
+    <p class="win__eyebrow" id="winEyebrow">Rozwiązane</p>
+    <h2 class="win__title" id="winTitle">Gotowe</h2>
+    <canvas class="win__art" id="winArt" aria-label="Odsłonięty obrazek"></canvas>
+    <dl class="win__stats" id="winStats">
+      <div><dt>Czas</dt><dd id="winTime">—</dd></div>
+      <div><dt>Podpowiedzi</dt><dd id="winHints">0</dd></div>
+      <div><dt>Rozmiar</dt><dd id="winSize">—</dd></div>
+    </dl>
+    <div class="win__actions">
+      <button class="btn btn--primary" id="againBtn"><span class="btn__main">Jeszcze raz</span></button>
+      <button class="btn" id="winMenuBtn"><span class="btn__main">Menu</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../wspolne/wspolne.js"></script>
+<script src="js/solver.js"></script>
+<script src="js/generator.js"></script>
+<script src="js/art.js"></script>
+<script src="js/samouczek.js"></script>
+<script src="js/board.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

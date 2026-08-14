@@ -1,0 +1,266 @@
+/* ==========================================================================
+   BIBLIOTEKA GIER — wspólna podstawa
+   Tokeny kolorów i te elementy, które powtarzają się w każdej grze:
+   ekrany, przyciski, plakietki, dymek z komunikatem.
+   Gra może nadpisać dowolny token u siebie — Bomba tak robi z akcentem.
+
+   Paleta jasna siedzi na gołym :root, ciemna dokłada się w dwóch miejscach:
+   z ustawień systemu i z przełącznika. Żaden kolor nie jest zdefiniowany
+   wyłącznie w media query — inaczej jeden z trybów wychodzi nieczytelny.
+   ========================================================================== */
+
+:root {
+  --bg: #EDEBE6;
+  --surface: #FDFCFA;
+  --raised: #FFFFFF;
+  --ink: #191A1E;
+  --muted: #6B6A72;
+  --line: #D6D3CB;
+  --grid-major: #9A968C;
+  --fill: #26262E;
+  --accent: #C0561F;
+  --accent-ink: #FFFFFF;
+  --accent-soft: rgba(192, 86, 31, 0.12);
+  --error: #C0392B;
+  --ok: #2F7A4F;
+  --shadow: 0 1px 2px rgba(25, 26, 30, .08), 0 8px 24px rgba(25, 26, 30, .07);
+  --radius: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131419;
+    --surface: #1C1D24;
+    --raised: #23242C;
+    --ink: #ECEAE6;
+    --muted: #9795A0;
+    --line: #32343E;
+    --grid-major: #585C69;
+    --fill: #E9E7E2;
+    --accent: #E4813C;
+    --accent-ink: #1B1206;
+    --accent-soft: rgba(228, 129, 60, 0.16);
+    --error: #E4685C;
+    --ok: #5CC08A;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px rgba(0, 0, 0, .35);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #131419;
+  --surface: #1C1D24;
+  --raised: #23242C;
+  --ink: #ECEAE6;
+  --muted: #9795A0;
+  --line: #32343E;
+  --grid-major: #585C69;
+  --fill: #E9E7E2;
+  --accent: #E4813C;
+  --accent-ink: #1B1206;
+  --accent-soft: rgba(228, 129, 60, 0.16);
+  --error: #E4685C;
+  --ok: #5CC08A;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px rgba(0, 0, 0, .35);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overscroll-behavior: none;   /* bez „gumowego" odbijania strony na iOS */
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 16px/1.45 ui-rounded, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;  /* zabija zoom po dwukliku */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none; /* bez menu „kopiuj" po przytrzymaniu palca */
+}
+
+button { font: inherit; color: inherit; }
+
+[disabled] { opacity: .45; cursor: default; }
+
+/* Klasy komponentów ustawiają display: flex albo grid, co samo z siebie
+   wygrywa z domyślnym display: none atrybutu hidden. Bez tej reguły
+   ukrywanie elementów przez hidden po prostu nie działa. */
+[hidden] { display: none !important; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ------------------------------------------------------------------ ekrany */
+
+.screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+           env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+.screen.is-active { display: flex; flex-direction: column; }
+
+/* --------------------------------------------------------------- przyciski */
+
+.btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .12s ease, background .15s;
+}
+.btn:active { transform: scale(.985); }
+.btn__main { font-weight: 600; font-size: 17px; }
+.btn__note { font-size: 13px; color: var(--muted); }
+
+.btn--primary { background: var(--accent); border-color: transparent; }
+.btn--primary .btn__main { color: var(--accent-ink); }
+.btn--primary .btn__note { color: var(--accent-ink); opacity: .75; }
+
+/* pionowa lista przycisków i rząd plakietek — powtarza się w każdym menu */
+.stack { display: flex; flex-direction: column; gap: 10px; }
+.prefs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+
+/* powrót do biblioteki, w lewym górnym rogu każdej gry */
+.wroc {
+  align-self: flex-start;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  padding: 6px 0;
+}
+.wroc:active { color: var(--ink); }
+
+.icon-btn {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+}
+.icon-btn svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.icon-btn:active { background: var(--raised); }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 13px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.chip[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+
+.chip__ico {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--muted);
+  position: relative;
+  flex: none;
+  transition: background .15s;
+}
+.chip[aria-pressed="true"] .chip__ico { background: var(--accent); }
+
+/* pół-księżyc w kółku motywu */
+.chip__ico--motyw::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 50%;
+  background: var(--surface);
+  border-radius: 0 999px 999px 0;
+}
+
+.chip__ico--check::after,
+.chip__ico--sound::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 3px;
+  width: 5px;
+  height: 8px;
+  border: solid var(--surface);
+  border-width: 0 2px 2px 0;
+  transform: rotate(42deg);
+}
+.chip[aria-pressed="false"] .chip__ico::after { opacity: .35; }
+
+/* ------------------------------------------------------------------ dymek */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(96px + env(safe-area-inset-bottom));
+  transform: translate(-50%, 12px);
+  z-index: 30;
+  padding: 10px 16px;
+  background: var(--fill);
+  color: var(--surface);
+  border-radius: 999px;
+  font-size: 14px;
+  max-width: 86vw;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s, transform .2s;
+}
+.toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+
+/* --------------------------------------------------------------- nakładka */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.overlay[hidden] { display: none; }
+
+@keyframes pop {
+  from { transform: scale(.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
