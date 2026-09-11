@@ -90,7 +90,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   font-size: 1.15rem;
 }
 
-.logo svg { width: 34px; height: 34px; }
+.logo__znak { width: 34px; height: 34px; }
 
 .logo em { color: var(--marka); font-style: normal; }
 
@@ -648,6 +648,32 @@ details p { color: var(--tekst-2); margin-top: 12px; }
 .stopka a:hover { color: var(--marka); }
 
 .stopka__opis { color: var(--tekst-2); font-size: .93rem; margin-top: 14px; max-width: 36ch; }
+
+.social {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.social a {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--linia);
+  border-radius: 12px;
+  background: var(--tlo-3);
+  color: var(--tekst-2);
+  transition: color .15s, border-color .15s, transform .15s;
+}
+
+.social a:hover {
+  color: var(--marka);
+  border-color: var(--marka);
+  transform: translateY(-2px);
+}
+
+.social svg { width: 20px; height: 20px; }
 
 .stopka__dol {
   margin-top: 40px;
