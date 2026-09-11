@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Fox3D">
+  <circle cx="120" cy="120" r="112" fill="#141416"/>
+  <path d="M120 12a108 108 0 0 1 108 108" fill="none" stroke="#F26522" stroke-width="9" stroke-linecap="round"/>
+  <path d="M228 120a108 108 0 0 1-108 108" fill="none" stroke="#F26522" stroke-width="9" stroke-linecap="round" opacity=".55"/>
+  <path d="M120 228A108 108 0 0 1 12 120" fill="none" stroke="#F2F2F2" stroke-width="9" stroke-linecap="round"/>
+  <polygon points="54,44 86,96 42,88" fill="#F26522"/>
+  <polygon points="118,38 130,92 92,80" fill="#FF7A1A"/>
+  <polygon points="42,86 130,88 186,124 118,168 56,136" fill="#F26522"/>
+  <polygon points="118,168 186,124 140,120 104,146" fill="#F2F2F2"/>
+  <polygon points="56,136 104,146 92,176 60,160" fill="#E6E6E6"/>
+  <polygon points="112,104 134,98 124,114" fill="#141416"/>
+</svg>

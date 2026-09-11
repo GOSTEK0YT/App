@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fox3D — druk 3D na zamówienie | breloki, figurki, gadżety</title>
+<meta name="description" content="Fox3D — sklep z wydrukami 3D. Breloki z imieniem, figurki, gadżety na biurko, litofanie ze zdjęć i druk z własnego pliku. Wysyłka w 2–5 dni.">
+<meta name="theme-color" content="#0d0d10">
+<meta property="og:title" content="Fox3D — druk 3D na zamówienie">
+<meta property="og:description" content="Breloki, figurki, gadżety i wydruki z Twojego pliku. Personalizacja w cenie.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://fox3d.pl/">
+<link rel="icon" href="img/znak.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styl.css">
+</head>
+<body>
+<a class="pomin" href="#tresc">Przejdź do treści</a>
+
+<header class="gora">
+  <div class="ramka gora__rzad">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <polygon points="14,10 24,28 10,25" fill="#f26522"/>
+        <polygon points="33,8 37,26 25,22" fill="#ff7a1a"/>
+        <polygon points="10,24 37,25 54,36 33,49 14,40" fill="#f26522"/>
+        <polygon points="33,49 54,36 40,35 29,43" fill="#f2f2f2"/>
+        <polygon points="31,29 38,27 35,32" fill="#141416"/>
+      </svg>
+      FOX<em>3D</em>
+    </a>
+    <nav class="menu" id="menu" aria-label="Menu główne">
+      <a href="index.html" aria-current="page">Start</a>
+      <a href="sklep.html">Sklep</a>
+      <a href="index.html#jak">Jak zamawiać</a>
+      <a href="zamowienie.html">Zamówienie</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <div class="gora__akcje">
+      <button class="koszyk-btn" data-koszyk type="button" aria-label="Koszyk">
+        <svg class="koszyk-btn__ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5.5 8h13l1.2 11.2a1.6 1.6 0 0 1-1.6 1.8H5.9a1.6 1.6 0 0 1-1.6-1.8Z"/>
+          <path d="M9 10V6.8a3 3 0 0 1 6 0V10"/>
+        </svg>
+        <span class="koszyk-btn__txt">Koszyk</span>
+        <span class="koszyk-btn__licznik" data-licznik hidden>0</span>
+      </button>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<main id="tresc">
+
+  <section class="hero">
+    <div class="ramka hero__siatka">
+      <div>
+        <span class="znacznik"><b>●</b> Drukujemy od ręki — wysyłka w 2–5 dni roboczych</span>
+        <h1>Twój pomysł wychodzi z drukarki jako <em>gotowa rzecz</em></h1>
+        <p class="hero__opis">Breloki z imieniem, figurki, gadżety na biurko i prezenty, których nie ma w sieciówkach. Masz własny plik albo tylko pomysł? To też robimy.</p>
+        <div class="hero__akcje">
+          <a class="btn" href="sklep.html">Zobacz sklep</a>
+          <a class="btn btn--obrys" href="zamowienie.html">Zamów wydruk z pliku</a>
+        </div>
+        <div class="hero__punkty">
+          <span>Personalizacja bez dopłaty</span>
+          <span>12 kolorów filamentu</span>
+          <span>Wysyłka InPost od 12 zł</span>
+        </div>
+      </div>
+      <div class="hero__kafel">
+        <img src="img/logo.svg" alt="Logo Fox3D" width="480" height="480">
+        <div class="hero__plakietka">
+          <span><b>0,08 mm</b>najcieńsza warstwa</span>
+          <span><b>256 mm</b>pole robocze</span>
+          <span><b>4,9/5</b>ocena kupujących</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pas">
+    <div class="ramka">
+      <div class="pas__siatka">
+        <div class="pas__poz"><b>Druk w Polsce</b><span>Bez czekania miesiąca na paczkę z Azji</span></div>
+        <div class="pas__poz"><b>Materiał z atestem</b><span>PLA, PETG, TPU i ASA — dobieram do zastosowania</span></div>
+        <div class="pas__poz"><b>Wzór na Twoje dane</b><span>Imię, data, logo albo numer rejestracyjny</span></div>
+        <div class="pas__poz"><b>Poprawki gratis</b><span>Nie pasuje? Poprawiam model i drukuję jeszcze raz</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="kategorie">
+    <div class="ramka">
+      <div class="naglowek">
+        <div>
+          <p class="nadtytul">Kategorie</p>
+          <h2>Od breloka po część zamienną</h2>
+          <p>Każdy produkt drukuję na zamówienie, więc kolor wybierasz Ty — nie magazyn.</p>
+        </div>
+        <a class="btn btn--obrys" href="sklep.html">Cały asortyment</a>
+      </div>
+      <div class="kategorie" id="kategorieLista"></div>
+    </div>
+  </section>
+
+  <section id="polecane">
+    <div class="ramka">
+      <div class="naglowek">
+        <div>
+          <p class="nadtytul">Najczęściej zamawiane</p>
+          <h2>Bestsellery</h2>
+          <p>To wychodzi z drukarki najczęściej. Kliknij, żeby wybrać kolor i napis.</p>
+        </div>
+      </div>
+      <div class="produkty produkty--trzy" id="polecaneLista"></div>
+    </div>
+  </section>
+
+  <section id="jak">
+    <div class="ramka">
+      <div class="naglowek">
+        <div>
+          <p class="nadtytul">Jak to działa</p>
+          <h2>Cztery kroki do paczki</h2>
+        </div>
+      </div>
+      <div class="kroki">
+        <div class="krok">
+          <h3>Wybierasz</h3>
+          <p>Produkt ze sklepu albo własny plik STL. Ustalasz kolor i treść personalizacji.</p>
+        </div>
+        <div class="krok">
+          <h3>Potwierdzam</h3>
+          <p>Odpisuję w ciągu 24 godzin z terminem i kwotą razem z wysyłką.</p>
+        </div>
+        <div class="krok">
+          <h3>Drukuję</h3>
+          <p>Przy personalizacji wysyłam zdjęcie przed pakowaniem — poprawki są jeszcze możliwe.</p>
+        </div>
+        <div class="krok">
+          <h3>Wysyłam</h3>
+          <p>Paczkomat, kurier albo odbiór osobisty. Numer przesyłki dostajesz tego samego dnia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="opinie">
+    <div class="ramka">
+      <div class="naglowek">
+        <div>
+          <p class="nadtytul">Opinie</p>
+          <h2>Co piszą kupujący</h2>
+        </div>
+      </div>
+      <div class="opinie">
+        <div class="opinia">
+          <div class="gwiazdki">★★★★★</div>
+          <p>Brelok z imieniem córki zrobiony w dwa dni, litery równe, nic się nie odkleja. Zamawiam drugi dla babci.</p>
+          <b>Karolina, Poznań</b>
+        </div>
+        <div class="opinia">
+          <div class="gwiazdki">★★★★★</div>
+          <p>Wysłałem plik zepsutej klamki od pralki. Dostałem wycenę wieczorem, część pasowała za pierwszym razem.</p>
+          <b>Marek, Wrocław</b>
+        </div>
+        <div class="opinia">
+          <div class="gwiazdki">★★★★★</div>
+          <p>Litofania ze zdjęcia ślubnego — prezent roku. Kontakt wzorowy, zdjęcie wydruku przed wysyłką to super sprawa.</p>
+          <b>Ania, Gdynia</b>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="ramka">
+      <div class="naglowek">
+        <div>
+          <p class="nadtytul">FAQ</p>
+          <h2>Pytania, które padają najczęściej</h2>
+        </div>
+      </div>
+      <div class="faq">
+        <details open>
+          <summary>Ile czekam na zamówienie?</summary>
+          <p>Produkty ze sklepu drukuję w 1–5 dni roboczych, zależnie od rozmiaru. Do tego doliczasz czas kuriera — zwykle jeden dzień. Przy większych zamówieniach termin podaję w potwierdzeniu.</p>
+        </details>
+        <details>
+          <summary>Czy mogę dostać inny kolor niż na stronie?</summary>
+          <p>Tak, kolor wybierasz przy dodawaniu do koszyka, a lista to dwanaście filamentów trzymanych na stałe. Jeśli szukasz konkretnego odcienia albo materiału z efektem, napisz — zwykle da się sprowadzić w kilka dni.</p>
+        </details>
+        <details>
+          <summary>Drukujecie z mojego pliku?</summary>
+          <p>Tak. Przyjmuję STL, 3MF i OBJ. Wycena zależy od masy materiału i czasu druku, dostajesz ją w ciągu doby. Jeśli model ma błędy, naprawiam go przed drukiem i mówię o tym wcześniej.</p>
+        </details>
+        <details>
+          <summary>Nie mam żadnego pliku, mam pomysł.</summary>
+          <p>To też robimy. Opisz, co ma powstać, dorzuć zdjęcie albo wymiary — projektuję model od zera i drukuję pierwszą sztukę do sprawdzenia.</p>
+        </details>
+        <details>
+          <summary>Czy wydruki są trwałe?</summary>
+          <p>Breloki i figurki drukuję z PLA — twarde i sztywne, ale nie lubią gorącego auta latem. Rzeczy użytkowe robię z PETG, który znosi ciepło i wilgoć. Części do zastosowań zewnętrznych drukuję z ASA.</p>
+        </details>
+        <details>
+          <summary>Jak płacę?</summary>
+          <p>Przelewem na konto albo BLIK-iem na numer telefonu — dane dostajesz w potwierdzeniu zamówienia. Przy odbiorze osobistym można gotówką.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="ramka">
+      <div class="cta">
+        <h2>Masz plik albo pomysł? Wyceniam w 24 godziny</h2>
+        <p>Napisz, co chcesz wydrukować. Odpiszę z ceną, terminem i propozycją materiału — bez zobowiązań.</p>
+        <div class="hero__akcje" style="justify-content:center">
+          <a class="btn" href="zamowienie.html">Zamów wycenę</a>
+          <a class="btn btn--obrys" href="kontakt.html">Napisz wiadomość</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<footer class="stopka">
+  <div class="ramka">
+    <div class="stopka__siatka">
+      <div>
+        <a class="logo" href="index.html">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <polygon points="14,10 24,28 10,25" fill="#f26522"/>
+            <polygon points="33,8 37,26 25,22" fill="#ff7a1a"/>
+            <polygon points="10,24 37,25 54,36 33,49 14,40" fill="#f26522"/>
+            <polygon points="33,49 54,36 40,35 29,43" fill="#f2f2f2"/>
+            <polygon points="31,29 38,27 35,32" fill="#141416"/>
+          </svg>
+          FOX<em>3D</em>
+        </a>
+        <p class="stopka__opis">Druk 3D na zamówienie. Breloki, figurki, gadżety i części z własnego pliku — projektowane i drukowane w Polsce.</p>
+      </div>
+      <div>
+        <h4>Sklep</h4>
+        <ul>
+          <li><a href="sklep.html#breloki">Breloki</a></li>
+          <li><a href="sklep.html#figurki">Figurki i fidgety</a></li>
+          <li><a href="sklep.html#dom">Do domu</a></li>
+          <li><a href="sklep.html#custom">Na zamówienie</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Informacje</h4>
+        <ul>
+          <li><a href="index.html#jak">Jak zamawiać</a></li>
+          <li><a href="index.html#faq">Pytania i odpowiedzi</a></li>
+          <li><a href="regulamin.html">Regulamin</a></li>
+          <li><a href="prywatnosc.html">Prywatność</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <ul>
+          <li><a href="mailto:kontakt@fox3d.pl">kontakt@fox3d.pl</a></li>
+          <li><a href="https://www.instagram.com/" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.facebook.com/" rel="noopener">Facebook</a></li>
+          <li><a href="kontakt.html">Formularz kontaktowy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="stopka__dol">
+      <span>© <span id="rok">2026</span> Fox3D — fox3d.pl</span>
+      <span>Wysyłka InPost · Paczkomat 12 zł · Kurier 17 zł · Odbiór osobisty 0 zł</span>
+    </div>
+  </div>
+</footer>
+
+<div class="zaslona" id="zaslona" data-otwarte="0"></div>
+
+<aside class="panel" id="panel" data-otwarte="0" aria-label="Koszyk">
+  <div class="panel__gora">
+    <h3>Twój koszyk</h3>
+    <button class="zamknij" type="button" data-zamknij-panel aria-label="Zamknij koszyk">×</button>
+  </div>
+  <div class="panel__lista" id="panelLista"></div>
+  <div class="panel__dol">
+    <div class="suma"><span>Razem</span><b id="panelSuma">0,00 zł</b></div>
+    <p class="uwaga">Do kwoty doliczana jest wysyłka wybrana w formularzu zamówienia.</p>
+    <a class="btn btn--pelny" id="doZamowienia" href="zamowienie.html">Przejdź do zamówienia</a>
+  </div>
+</aside>
+
+<div class="modal" id="modal" data-otwarte="0" role="dialog" aria-modal="true" aria-label="Szczegóły produktu">
+  <button class="modal__tlo" type="button" data-zamknij-modal aria-label="Zamknij"></button>
+  <div class="modal__okno">
+    <button class="zamknij" type="button" data-zamknij-modal aria-label="Zamknij">×</button>
+    <div id="modalTresc"></div>
+  </div>
+</div>
+
+<div class="komunikat" id="komunikat" role="status" aria-live="polite" data-widoczny="0"></div>
+
+<script src="js/dane.js"></script>
+<script src="js/sklep.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const kategorie = document.getElementById('kategorieLista');
+    kategorie.innerHTML = KATEGORIE.map((k) => {
+      const ile = PRODUKTY.filter((p) => p.kategoria === k.id).length;
+      return `<a class="kategoria" href="sklep.html#${k.id}">
+        <span class="kategoria__ikona"><svg viewBox="0 0 120 100" aria-hidden="true">${IKONY[k.id]}</svg></span>
+        <span><b>${k.nazwa}</b><span>${ile} ${ile === 1 ? 'pozycja' : 'pozycje'}</span></span>
+      </a>`;
+    }).join('');
+    wyswietlProdukty(
+      document.getElementById('polecaneLista'),
+      PRODUKTY.filter((p) => p.tagi.includes('bestseller')).slice(0, 6)
+    );
+  });
+</script>
+</body>
+</html>
